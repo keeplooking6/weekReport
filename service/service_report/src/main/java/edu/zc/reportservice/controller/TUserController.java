@@ -12,6 +12,8 @@ import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 /**
  * <p>
  *  前端控制器
@@ -73,10 +75,11 @@ public class TUserController {
     //查找用户
     @ApiOperation(value="查找用户")
     @PostMapping("/select/{current}/{limit}")
-    public Response select(@ApiParam(name="name",value="用户名")String name,
+    public Response select(@ApiParam(name="current",value="当前页")long current,
+                           @ApiParam(name="limit",value="当前页")long limit,
                            @ApiParam(name="tUserQuery",value="用户对象") @RequestBody TUserQuery tUserQuery){
-//        boolean save = tUserService.getMap(wrapper);
-        Page<TUser> page = new Page<>();
+
+        Page<TUser> pageUser = new Page<>(current,limit);
         QueryWrapper<TUser> wrapper = new QueryWrapper<>();
         Integer id = tUserQuery.getId();
         String gender = tUserQuery.getGender();
@@ -90,10 +93,11 @@ public class TUserController {
         if(roleid!=null){
             wrapper.like("roleid",roleid);
         }
-//        if(){
-//            return Response.ok();
-//        }
-        return Response.error();
+        tUserService.page(pageUser,wrapper);
+        long total = pageUser.getTotal();
+        List<TUser> records = pageUser.getRecords();
+
+        return Response.ok().data("total",total).data("list",records);
     }
 
     //添加用户

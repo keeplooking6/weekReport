@@ -37,9 +37,7 @@ public class TUser implements Serializable {
     private Integer roleid;
 
     private String gender;
-
-    private Integer isenabled;
     @TableLogic
-    private Integer isdeleted;
+    private Integer deleted;
 
 }

@@ -21,6 +21,5 @@ public class TUserQuery {
     private Integer roleid;
     @ApiModelProperty(value="用户性别")
     private String gender;
-    @ApiModelProperty(value="用户id")
-    private Integer isenabled;
+
 }

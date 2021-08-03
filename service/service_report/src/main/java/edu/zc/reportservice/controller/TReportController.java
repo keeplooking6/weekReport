@@ -12,6 +12,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.HashMap;
 import java.util.List;
@@ -150,6 +151,12 @@ public class TReportController {
         map.put("list",records);
         map.put("total",total);
         return Response.ok().data(map);
+    }
+
+    @PostMapping("/upload")
+    public void upload(MultipartFile file){
+        String originalFilename = file.getOriginalFilename();
+        System.out.println(originalFilename);
     }
 
 }
